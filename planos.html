@@ -1,0 +1,364 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Planos Longevitá - Tabs</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@600;700&display=swap');
+
+  /* Reset básico para evitar problemas de box sizing */
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+
+  /* Estilos gerais do body */
+  body {
+    margin: 0;
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+      Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    background-color: #2d083b; /* Fundo branco para visual limpo */
+    color: #6b7280; /* Cinza neutro para texto */
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Container principal centralizado e com espaçamentos verticais */
+  main {
+    max-width: 1200px; /* Largura máxima para leitura confortável */
+    margin: 3rem auto 6rem; /* Margem superior e inferior */
+    padding: 0 2rem; /* Espaçamento lateral */
+  }
+
+  /* Cabeçalho fixo no topo com sombra leve */
+  header.navbar {
+    position: sticky;
+    top: 0;
+    background: #fff;
+    border-bottom: 1px solid #e5e7eb; /* Linha sutil para separação */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    z-index: 100; /* Fica acima do conteúdo */
+    box-shadow: 0 1px 6px rgb(0 0 0 / 0.06); /* Sombra suave */
+    user-select: none; /* Impede seleção indesejada */
+  }
+  /* Logo no menu */
+  .navbar .logo {
+    font-weight: 700;
+    font-size: 1.5rem;
+    color: #111827; /* Preto quase */
+  }
+  /* Links de navegação */
+  .navbar nav a {
+    margin-left: 1.75rem;
+    text-decoration: none;
+    color: #ffffff;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: color 0.3s ease;
+  }
+  .navbar nav a:hover,
+  .navbar nav a:focus-visible {
+    color: #eb25d1; /* Azul vibrante no hover/foco */
+    outline: none;
+  }
+
+  /* Título principal da seção */
+  h1.section-title {
+    font-weight: 700;
+    font-size: 3rem; /* 48px */
+    color: #ffffff; /* Preto quase */
+    margin-bottom: 2rem;
+    user-select: none; /* Sem seleção */
+  }
+
+  /* Container das abas (tabs) */
+  .tabs {
+    border-bottom: 2px solid #e5e7eb;
+    display: flex;
+    gap: 2rem; /* Espaçamento entre abas */
+    margin-bottom: 2rem;
+    user-select: none;
+    overflow-x: auto; /* Scroll horizontal em telas pequenas */
+  }
+
+  /* Cada botão da aba */
+  .tab {
+    padding: 0.75rem 1.5rem;
+    font-weight: 700;
+    font-size: 1.125rem;
+    background: none;
+    border: none;
+    border-bottom: 3px solid transparent;
+    color: #6b7280;
+    cursor: pointer;
+    transition: border-color 0.3s ease, color 0.3s ease;
+    flex-shrink: 0; /* Para não encolher */
+    white-space: nowrap; /* Para não quebrar texto */
+  }
+  .tab:focus-visible {
+    outline-offset: 3px;
+    outline: 2px solid #2563eb;
+    border-bottom-color: transparent;
+  }
+  .tab[aria-selected="true"] {
+    color: #2563eb;
+    border-bottom-color: #2563eb;
+    cursor: default;
+  }
+  .tab[aria-selected="true"]:hover {
+    color: #2563eb;
+  }
+  .tab:not([aria-selected="true"]):hover {
+    color: #374151;
+  }
+
+  /* Container das áreas de conteúdo das abas */
+  .tab-panels {
+    max-width: 700px;
+  }
+
+  /* Cada painel de conteúdo */
+  .tab-panel {
+    display: none; /* Escondidos por padrão */
+    background: #2d083b;  /* Fundo leve para destaque */
+    border-radius: 0.75rem;
+    box-shadow: 0 1px 6px rgb(0 0 0 / 0.1);
+    padding: 2.5rem 3rem 3rem 3rem;
+    color: #ffffff;
+    font-family: 'Times New Roman', Times, serif; /* Fonte serifada para legibilidade */
+    font-size: 1.125rem;
+    line-height: 1.6;
+  }
+  .tab-panel[aria-hidden="false"] {
+    display: block;
+    animation: fadeIn 0.4s ease forwards;
+  }
+
+  /* Título dentro do painel */
+  .tab-panel .plan-title {
+    font-weight: 700;
+    font-size: 2rem;
+    margin-top: 0;
+    margin-bottom: 1rem;
+    color: #ffffff;
+  }
+
+  /* Preço destacado abaixo do título */
+  .plan-price {
+    font-weight: 700;
+    font-size: 1.75rem;
+    color: #2563eb;
+    margin-bottom: 1.75rem;
+  }
+
+  /* Animação de fade in nos painéis */
+  @keyframes fadeIn {
+    0% {opacity: 0; transform: translateY(10px);}
+    100% {opacity: 1; transform: translateY(0);}
+  }
+
+  /* Ajustes para telas pequenas */
+  @media (max-width: 480px) {
+    main {
+      padding: 0 1rem;
+    }
+    .tabs {
+      gap: 1rem;
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+    .tab {
+      padding: 0.5rem 1rem;
+      font-size: 1rem;
+    }
+    .tab-panels {
+      max-width: 100%;
+      padding: 0;
+    }
+  }
+
+  /* Botão voltar estilizado */
+  button.back-button {
+    position: fixed;
+    top: 1.5rem;
+    right: 1.5rem;
+    background-color: #000000;
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 1.25rem;
+    padding: 1rem 2rem;
+    border: none;
+    border-radius: 0.75rem;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+    transition: background-color 0.3s ease;
+    user-select: none;
+    z-index: 9999;
+  }
+  button.back-button:focus {
+    background-color: #2563eb;
+    outline: none;
+  }
+  button.back-button:focus:not(:focus-visible) {
+    background-color: #000000;
+  }
+  button.back-button:hover {
+    background-color: #333333;
+  }
+
+  /* Ocultar botão em telas móveis (menor que 768px) e mostrar em telas maiores */
+  @media (max-width: 767px) {
+    button.back-button {
+      display: none;
+    }
+  }
+  @media (min-width: 768px) {
+    button.back-button {
+      display: inline-flex;
+    }
+  }
+</style>
+</head>
+<body>
+
+  <!-- Título principal da seção de planos -->
+  <h1 class="section-title" id="plans">Planos Longevitá</h1>
+
+  <!-- Lista de abas para alternar entre os planos -->
+  <div class="tabs" role="tablist" aria-label="Planos da Academia Longevitá">
+    <!-- Cada botão de aba com atributos ARIA para acessibilidade -->
+    <button role="tab" aria-selected="true" tabindex="0" id="tab-essencial" aria-controls="panel-essencial" class="tab">Essencial Longevitá</button>
+    <button role="tab" aria-selected="false" tabindex="-1" id="tab-vitalidade" aria-controls="panel-vitalidade" class="tab">Vitalidade</button>
+    <button role="tab" aria-selected="false" tabindex="-1" id="tab-logenvidade" aria-controls="panel-logenvidade" class="tab">Logenvidade Total</button>
+    <button role="tab" aria-selected="false" tabindex="-1" id="tab-bemestar" aria-controls="panel-bemestar" class="tab">Bem Estar Completo</button>
+  </div>
+
+  <!-- Painéis individuais com detalhes dos planos -->
+  <div class="tab-panels">
+    <section role="tabpanel" tabindex="0" aria-labelledby="tab-essencial" id="panel-essencial" class="tab-panel" aria-hidden="false">
+      <h2 class="plan-title">Essencial Longevitá</h2>
+      <p class="plan-price">R$ 129,90</p>
+      <p>
+        Treinamentos focados para quem está começando<br>
+        3x na semana<br>
+        Musculação Adaptada<br>
+        Avaliação Física Semestral<br>
+        Ficha de treino personalizada (ajustes semestrais)<br>
+        <strong>Ideal para dar o primeiro passo com segurança.</strong>
+      </p>
+    </section>
+    <section role="tabpanel" tabindex="0" aria-labelledby="tab-vitalidade" id="panel-vitalidade" class="tab-panel" aria-hidden="true">
+      <h2 class="plan-title">Vitalidade</h2>
+      <p class="plan-price">R$ 159,90</p>
+      <p>
+        Plano intermediário para manter a saúde em dia<br>
+        4x na semana<br>
+        Musculação Adaptada<br>
+        2 aulas coletivas por semana<br>
+        Avaliação Física Trimestral<br>
+        Ficha de treino personalizada (ajustes regulares)<br>
+        Relatório de progresso Funcional<br>
+        <strong>Perfeito para quem deseja manter a forma.</strong>
+      </p>
+    </section>
+    <section role="tabpanel" tabindex="0" aria-labelledby="tab-logenvidade" id="panel-logenvidade" class="tab-panel" aria-hidden="true">
+      <h2 class="plan-title">Logenvidade Total</h2>
+      <p class="plan-price">R$ 189,90</p>
+      <p>
+        Treinamento completo para alta performance e bem-estar<br>
+        5x na semana<br>
+        Musculação Adaptada<br>
+        Todas as aulas coletivas<br>
+        Avaliação Física Trimestral completa<br>
+        Ficha de treino personalizada (ajustes regulares)<br>
+        Relatório de progresso Funcional<br>
+        <strong>Para quem busca o máximo em saúde e qualidade de vida.</strong>
+      </p>
+    </section>
+    <section role="tabpanel" tabindex="0" aria-labelledby="tab-bemestar" id="panel-bemestar" class="tab-panel" aria-hidden="true">
+      <h2 class="plan-title">Bem Estar Completo</h2>
+      <p class="plan-price">R$ 219,90</p>
+      <p>
+        Plano premium para um estilo de vida ativo<br>
+        6x na semana<br>
+        Musculação Adaptada<br>
+        Todas as aulas coletivas<br>
+        Avaliação Física Mensal completa<br>
+        Ficha de treino personalizada (ajustes mensais)<br>
+        Relatório de progresso Funcional<br>
+        <strong>O plano ideal para quem quer estar sempre em movimento.</strong>
+      </p>
+    </section>
+  </div>
+
+  <button 
+    type="button" 
+    aria-label="Voltar à página anterior" 
+    onclick="window.history.back()"
+    class="back-button"
+  >
+    Voltar
+  </button>
+
+<script>
+  // Código para alternar as abas de planos
+  document.addEventListener('DOMContentLoaded', () => {
+    const tabs = document.querySelectorAll('.tab');
+    const panels = document.querySelectorAll('.tab-panel');
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        // Desativa todas as abas e respectivos painéis
+        tabs.forEach(t => {
+          t.setAttribute('aria-selected', 'false');
+          t.tabIndex = -1; // torna não focável via tab
+        });
+        panels.forEach(panel => {
+          panel.setAttribute('aria-hidden', 'true'); // esconde painel
+        });
+
+        // Ativa a aba clicada e mostra o painel correspondente
+        tab.setAttribute('aria-selected', 'true');
+        tab.tabIndex = 0; // torna focável via tab
+        const panelId = tab.getAttribute('aria-controls');
+        const panel = document.getElementById(panelId);
+        panel.setAttribute('aria-hidden', 'false');
+        panel.focus(); // foco para acessibilidade
+      });
+
+      // Navegação via teclado entre abas para acessibilidade
+      tab.addEventListener('keydown', e => {
+        let index = Array.prototype.indexOf.call(tabs, e.currentTarget);
+        if(e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+          e.preventDefault();
+          let next = tabs[(index + 1) % tabs.length];
+          next.focus();
+        }
+        else if(e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+          e.preventDefault();
+          let prev = tabs[(index - 1 + tabs.length) % tabs.length];
+          prev.focus();
+        }
+        else if(e.key === 'Home') {
+          e.preventDefault();
+          tabs[0].focus();
+        }
+        else if(e.key === 'End') {
+          e.preventDefault();
+          tabs[tabs.length -1].focus();
+        }
+      });
+    });
+  });
+</script>
+
+</body>
+</html>
+

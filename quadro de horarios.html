@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quadro de Horário das Modalidades</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: 'Times New Roman', Times, serif, sans-serif;
+            background-color: #ffffff; /* Fundo branco para o corpo */
+            color: #000000; /* Cor do texto */
+        }
+
+        /* Estilo da seção de horários */
+        .schedule {
+            background-color: #2d083b; /* Fundo roxo */
+            padding: 20px;
+            color: white; /* Cor do texto na seção */
+            min-height: 100vh; /* Altura mínima para ocupar toda a tela */
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* Centraliza verticalmente */
+            align-items: center; /* Centraliza horizontalmente */
+        }
+
+        .schedule-header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .schedule-header h2 {
+            font-size: 2rem; /* Tamanho do título */
+            margin: 0;
+        }
+
+        .schedule-header p {
+            max-width: 600px;
+            margin: 0.5rem auto 1rem;
+            font-size: 1rem;
+            color: #e0e0e0; /* Cor do texto secundário */
+        }
+
+        /* Wrapper da tabela */
+        .schedule-table-wrapper {
+            overflow-x: auto; /* Habilita rolagem horizontal */
+            width: 100%; /* Largura total */
+        }
+
+        /* Estilo da tabela */
+        .schedule-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        .schedule-table th, .schedule-table td {
+            border: 1px solid #000000; /* Borda preta */
+            padding: 10px;
+            text-align: center;
+        }
+
+        .schedule-table th {
+            background-color: #2d083b; /* Cor do cabeçalho */
+            color: white; /* Cor do texto do cabeçalho */
+        }
+
+        .schedule-table tr:nth-child(even) {
+            background-color: #000000; /* Cor de fundo para linhas pares */
+        }
+
+        .schedule-table tr:hover {
+            background-color: #7a4bca; /* Cor de fundo ao passar o mouse */
+        }
+
+        /* Estilo para células editáveis */
+        [contenteditable="true"] {
+            background-color: #a874c2; /* Cor de fundo para células editáveis */
+            color: #070000; /* Cor do texto */
+            cursor: text; /* Cursor de texto */
+        }
+    </style>
+</head>
+<body>
+    <!--seção de funcionamento-->
+    <section class="schedule" id="schedule" aria-label="schedule-subtitle" style="padding-bottom: 0; margin-bottom: 0;">
+        <header class="schedule-header" style="margin-bottom: 5px;">
+            <h2 id="schedule-subtitle" style="margin-bottom: 0.5rem;">Horários de Funcionamento</h2>
+            <p style="max-width: 600px; margin: 0 auto;">A academia está aberta de segunda a sexta-feira, com horário reduzido aos sábados.</p>
+        </header>
+        <div class="schedule-table-wrapper" role="region" aria-label="Horários de funcionamento da academia" style="margin-bottom: 0;">
+            <table class="schedule-table" summary="Horários de funcionamento da academia" style="margin-top: 0;">
+                <thead>
+                    <style>
+                        /* Estilo da tabela */
+.schedule-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Sombra para a tabela */
+    border-radius: 8px; /* Bordas arredondadas */
+    overflow: hidden; /* Para bordas arredondadas */
+}
+
+.schedule-table th, .schedule-table td {
+    border: 1px solid #000000; /* Borda preta */
+    padding: 10px;
+    text-align: center;
+    transition: background-color 0.3s; /* Transição suave para a cor de fundo */
+}
+
+.schedule-table th {
+    background-color: #2d083b; /* Cor do cabeçalho mais escura */
+    color: #ffffff; /* Cor do texto do cabeçalho */
+    font-weight: bold; /* Negrito para o cabeçalho */
+}
+
+.schedule-table tr:nth-child(even) {
+    background-color: #f2f2f2; /* Cor de fundo para linhas pares */
+}
+
+.schedule-table tr:hover {
+    background-color: #7a4bca; /* Cor de fundo ao passar o mouse */
+    color: #ffffff; /* Cor do texto ao passar o mouse */
+}
+
+.schedule-table td {
+    background-color: #a874c2; /* Cor de fundo padrão para células */
+    color: #333333; /* Cor do texto padrão */
+}
+
+/* Estilo para células editáveis */
+[contenteditable="true"] {
+    background-color: #a874c2; /* Cor de fundo para células editáveis */
+    color: #070000; /* Cor do texto */
+    cursor: text; /* Cursor de texto */
+    border: 1px dashed #7a4bca; /* Borda pontilhada para células editáveis */
+    transition: background-color 0.3s; /* Transição suave para a cor de fundo */
+}
+
+[contenteditable="true"]:focus {
+    background-color:#d1c4e9; /* Cor de fundo ao focar na célula editável */
+}
+
+                    </style>
+                    <tr>
+                        <th scope="col">Dia</th>
+                        <th scope="col">Horário</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Segunda a Sexta</td>
+                        <td>06:00 - 22:00</td>
+                    </tr>
+                    <tr>
+                        <td>Sábado</td>
+                        <td>08:00 - 18:00</td>
+                    </tr>
+                    <tr>
+                        <td>Domingo e Feriados</td>
+                        <td>Fechado</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    <!-- ===== Horarios de Funcionamento ===== -->
+    <section class="schedule" id="schedule-modalidades" aria-labelledby="schedule-title" style="margin-top: -40px;">
+        <header class="schedule-header">
+            <h2 id="schedule-title">Quadro de Horário das Modalidades</h2>
+            <p>Confira abaixo os horários das modalidades disponíveis na academia.</p>
+        </header>
+    <!-- Wrapper da tabela habilita rolagem horizontal em dispositivos móveis -->
+    <div class="schedule-table-wrapper" role="region" aria-label="Quadro de horário da academia">
+        <!-- Tabela de horários editável -->
+        <table class="schedule-table" summary="Horários das atividades da academia por dia da semana">
+            <thead>
+                <tr>
+                    <th scope="col">Horário</th>
+                    <th scope="col">Segunda</th>
+                    <th scope="col">Terça</th>
+                    <th scope="col">Quarta</th>
+                    <th scope="col">Quinta</th>
+                    <th scope="col">Sexta</th>
+                    <th scope="col">Sábado</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td contenteditable="true">06:30 - 7:15</td>
+                    <td contenteditable="true">Alongamento</td>
+                    <td contenteditable="true">Alongamento</td>
+                    <td contenteditable="true">Alongamento</td>
+                    <td contenteditable="true">Pilates</td>
+                    <td contenteditable="true">Pilates</td>
+                    <td contenteditable="true">Pilates</td>
+                </tr>
+                <tr>
+                    <td contenteditable="true">07:45 - 08:30</td>
+                    <td contenteditable="true">Mobilidade Articular</td>
+                    <td contenteditable="true">Mobilidade Articular</td>
+                    <td contenteditable="true">Mobilidade Articular</td>
+                    <td contenteditable="true">Alongamento</td>
+                    <td contenteditable="true">Yoga</td>
+                    <td contenteditable="true">Yoga</td>
+                </tr>
+                <tr>
+                    <td contenteditable="true">09:00 - 09:45</td>
+                    <td contenteditable="true">Funcional 60+</td>
+                    <td contenteditable="true">Funcional 60+</td>
+                    <td contenteditable="true">Prevenção de Quedas</td>
+                    <td contenteditable="true">Prevenção de Quedas</td>
+                    <td contenteditable="true">Dança Sênior</td>
+                    <td contenteditable="true">Dança Sênior</td>
+                </tr>
+                <tr>
+                    <td contenteditable="true">14:00 - 14:45</td>
+                    <td contenteditable="true">Pilates</td>
+                    <td contenteditable="true">Pilates</td>
+                    <td contenteditable="true">Yoga</td>
+                    <td contenteditable="true">Yoga</td>
+                    <td contenteditable="true">Alongamento</td>
+                    <td contenteditable="true">-</td>
+                </tr>
+                <tr>
+                    <td contenteditable="true">15:00 - 15:45</td>
+                    <td contenteditable="true">Prevenção de Quedas</td>
+                    <td contenteditable="true">Prevenção de quedas</td>
+                    <td contenteditable="true">Mobilidade Articular</td>
+                    <td contenteditable="true">Mobilidade Articular</td>
+                    <td contenteditable="true">Mobilidade Articular</td>
+                    <td contenteditable="true">-</td>
+                </tr>
+                <tr>
+                    <td contenteditable="true">16:00 - 16:45</td>
+                    <td contenteditable="true">Dança Sênior</td>
+                    <td contenteditable="true">Dança Sênior</td>
+                    <td contenteditable="true">Funcional 60+</td>
+                    <td contenteditable="true">Funcional 60+</td>
+                    <td contenteditable="true">Funcional 60+</td>
+                    <td contenteditable="true">-</td>
+                </tr>
+            </tbody>
+        </table>
+        <div><p>Aulas coletivas com limite de vagas podem exigir agendamento.</p></div>
+        <div><p>Musculação adaptada funciona em hórario livre durante todo o período de funcionamento da academia.</p></div>
+    </div>
+</section>
+<!-- Fim da seção de Horários -->
+
+</body>
+</html>
+ 
+<button 
+<!-- Botão Voltar -->
+<button 
+    type="button" 
+    aria-label="Voltar à página anterior" 
+    onclick="window.history.back()"
+    class="back-button"
+    style="
+      position: fixed;
+      top: 1.5rem;
+      right: 1.5rem;
+      background-color: #ffffff;
+      color: #000000;
+      font-weight: 700;
+      font-size: 1.25rem;
+      padding: 1rem 2rem;
+      border: none;
+      border-radius: 0.75rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      transition: background-color 0.3s ease;
+      user-select: none;
+      z-index: 9999;
+    "
+    onmouseover="this.style.backgroundColor='#2563eb'; this.style.color='#fff';"
+    onmouseout="this.style.backgroundColor='#ffffff'; this.style.color='#000';"
+    onfocus="this.style.backgroundColor='#2563eb'; this.style.color='#fff';"
+    onblur="this.style.backgroundColor='#ffffff'; this.style.color='#000';"
+>
+    Voltar
+</button>
+<style>
+/* Responsive adjustments for smaller screens */
+@media (max-width: 600px) {
+  .back-button {
+    font-size: 1rem !important;
+    padding: 0.75rem 1.5rem !important;
+    top: 1rem !important;
+    right: 1rem !important;
+  }
+}
+</style>
+<script>
+  (function() {
+    const button = document.querySelector('button[aria-label="Voltar à página anterior"]');
+
+    function toggleButtonVisibility() {
+      if (window.scrollY > 0) {
+        button.style.display = 'none';
+      } else {
+        button.style.display = '';
+      }
+    }
+
+    window.addEventListener('scroll', toggleButtonVisibility, { passive: true });
+    toggleButtonVisibility();
+  })();
+</script>
+<style>
+    /* Mobile-first: hide back button by default */
+.back-button {
+  display: none;
+}
+
+/* Show back button on screens 768px and wider (desktop and tablets) */
+@media (min-width: 768px) {
+  .back-button {
+    display: inline-block;
+  }
+}
+
+/* Optional: Smooth transition when toggling */
+.back-button {
+  transition: opacity 0.3s ease;
+}
+</style>
+</body>
+</html>

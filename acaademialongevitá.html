@@ -1,0 +1,361 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Academia longevitá</title>
+  <style>
+    /* Importar Google Fonts */
+    @import url('https://fonts.google.com/share?selection.family=Bebas+Neue|Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900|Inter:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900');
+
+    /* Variáveis CSS raiz para fácil personalização */
+    :root {
+      --color-primary: #ffffff;           /* Cor principal escura para títulos e texto importante */
+      --color-secondary: #e8f1fd;         /* Cinza neutro para texto do corpo */
+      --color-accent: #e7e8e9;            /* Cor de destaque brilhante para links e botões */
+      --color-bg: #2d083b;                /* Cor de fundo da página */
+      --color-card-bg: #a874c2;           /* Fundo para cartões e tabelas */
+      --color-border: #000000;            /* Cor de borda clara */
+      --font-heading: 'Poppins', sans-serif; /* Fonte para títulos */
+      --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+        Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif; /* Fonte para parágrafos e corpo */
+      --radius: 0.75rem;                  /* Tamanho do canto arredondado */
+      --shadow-card: 0 1px 4px rgba(49, 4, 49, 0.1); /* Sombra do cartão */
+      --transition: 0.3s ease;            /* Velocidade de transição para elementos interativos */
+    }
+
+    /* Reset & estilos base */
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: var(--font-body);
+      background-color: var(--color-bg);
+      color: var(--color-secondary);
+      line-height: 1.6;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      scroll-behavior: smooth;
+    }
+
+    a {
+      color: var(--color-accent);
+      text-decoration: none;
+      transition: color var(--transition);
+    }
+    a:hover,
+    a:focus {
+      color: #2563eb;
+      outline: none;
+      text-decoration: underline;
+    }
+
+    /* Container: largura máxima do conteúdo da página e padding responsivo */
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding-left: 1rem;
+      padding-right: 1rem;
+      width: 100%;
+    }
+
+    /* ===== Cabeçalho (Barra de Navegação) ===== */
+    header {
+      position: sticky;           /* Fica fixo no topo ao rolar */
+      top: 0;
+      background: var(--color-bg);
+      z-index: 999;
+      border-bottom: 1px solid var(--color-border);
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 4.5rem;
+    }
+
+    /* Estilo do texto do logo */
+    .logo {
+      font-family: var(--font-heading);
+      font-size: 1.75rem;
+      font-weight: 700;
+      color: var(--color-primary);
+      letter-spacing: 0.05em;
+      user-select: none;
+      text-transform: uppercase; /* Coloca o texto em caixa alta */
+    }
+
+    /* Container de links do menu de navegação */
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      font-weight: 600;
+      font-size: 1rem;
+    }
+
+    /* Estilo dos links de navegação e efeito de hover */
+    .nav-links a {
+      color: var(--color-secondary);
+      padding: 0.25rem 0;
+      position: relative;
+      transition: color var(--transition);
+    }
+    .nav-links a:hover,
+    .nav-links a:focus {
+      color: var(--color-primary);
+    }
+
+    /* ===== Seção Hero ===== */
+    .hero {
+      text-align: center;
+      padding: 6rem 1rem 4rem;
+      color: var(--color-primary);
+    }
+
+    /* Título principal da seção hero */
+    .hero h1 {
+      font-family: var(--font-heading);
+      font-weight: 800;
+      font-size: clamp(2.5rem, 5vw, 4.5rem);
+      margin-bottom: 1rem;
+      line-height: 1.1;
+    }
+
+    /* Texto do subtítulo da seção hero */
+    .hero p {
+      font-size: 1.25rem;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      color: var(--color-secondary);
+      margin-bottom: 2.5rem;
+    }
+
+    /* Botão de chamada para ação */
+    .btn-primary {
+      font-family: var(--font-heading);
+      background-color: var(--color-primary);
+      color: #2d083b; /* Cor de fundo do botão */
+      padding: 1rem 2rem;
+      border: none;
+      border-radius: var(--radius);
+      font-weight: 700;
+      font-size: 1.125rem;
+      cursor: pointer;
+      box-shadow: var(--shadow-card);
+      transition: background-color var(--transition), transform var(--transition);
+      user-select: none;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .btn-primary:hover,
+    .btn-primary:focus {
+      background-color: #4b0141;
+      outline: none;
+      transform: scale(1.05);
+    }
+
+    /* ===== Seção de Planos ===== */
+    section.plans {
+      padding: 4rem 1rem 6rem;
+      background-color: var(--color-bg);
+    }
+
+    /* Cabeçalho da seção de planos */
+    .plans-header {
+      text-align: center;
+      margin-bottom: 3rem;
+      color: var(--color-primary);
+    }
+    .plans-header h2 {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 2.5rem;
+      margin: 0;
+    }
+
+    /* Container de grade para cartões de planos */
+    .plans-grid {
+      display: grid;
+      gap: 2rem;
+      grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+      max-width: 900px; /* Largura máxima para a grade */
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* Estilo do cartão de plano individual */
+    .plan-card {
+      background-color: var(--color-card-bg);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow-card);
+      padding: 2rem;
+      display: flex;
+      flex-direction: column;
+      transition: box-shadow var(--transition);
+      cursor: default;
+      font-family: 'Times New Roman', Times, serif; /* Troca a fonte para Times New Roman */
+  font-size: 0.9rem; /* Diminui o tamanho da fonte */
+    }
+    /* Efeito de sombra ao passar o mouse sobre os cartões */
+    .plan-card:hover {
+      box-shadow: 0 6px 18px rgba(59, 130, 246, 0.3);
+    }
+
+    /* Estilo do título do plano */
+    .plan-title {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 1.5rem;
+      margin-bottom: 0.5rem;
+      color: var(--color-primary);
+    }
+
+    /* Texto da descrição do plano */
+    .plan-desc {
+      color: var(--color-secondary);
+      font-size: 1rem;
+      flex-grow: 1;
+      margin-bottom: 1.5rem;
+    }
+
+    /* ===== Seção de Horários ===== */
+    section.schedule {
+      background-color: var(--color-bg);
+      padding: 4rem 1rem 6rem;
+    }
+
+    /* Cabeçalho da seção de horários */
+    .schedule-header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+      color: var(--color-primary);
+    }
+    .schedule-header h2 {
+      font-family: var(--font-heading);
+      font-weight: 700;
+      font-size: 2.5rem;
+      margin: 0;
+    }
+
+    /* Wrapper para habilitar rolagem horizontal em telas menores */
+    .schedule-table-wrapper {
+      overflow-x: auto;
+      max-width: 1000px;
+      margin-left: auto;
+      margin-right: auto;
+      box-shadow: var(--shadow-card);
+      border-radius: var(--radius);
+      background: var(--color-card-bg);
+    }
+
+    /* Estilo da tabela de horários */
+    table.schedule-table {
+      border-collapse: collapse;
+      width: 100%;
+      min-width: 700px;
+    }
+
+    /* Células e cabeçalhos da tabela */
+    table.schedule-table th,
+    table.schedule-table td {
+      border: 1px solid var(--color-border);
+      padding: 0.75rem 1rem;
+      text-align: center;
+      font-size: 0.95rem;
+      color: var(--color-secondary);
+      user-select: text;
+      vertical-align: middle;
+      min-width: 80px;
+    }
+
+    /* Cabeçalho da tabela fixo */
+    table.schedule-table th {
+      background-color: var(--color-bg);
+      font-weight: 700;
+      color: var(--color-primary);
+      position: sticky;
+      top: 0;
+      z-index: 2;
+      min-width: 80px;
+    }
+
+    /* Destaque da linha ao passar o mouse */
+    tr:hover {
+      background-color: rgba(59, 130, 246, 0.1);
+      transition: background-color var(--transition);
+    }
+
+    /* ===== Rodapé ===== */
+    footer {
+      text-align: center;
+      padding: 2rem 1rem;
+      font-size: 0.9rem;
+      color: var(--color-secondary);
+      border-top: 1px solid var(--color-border);
+      user-select: none;
+    }
+
+    /* Padding responsivo para telas maiores */
+    @media (min-width: 768px) {
+      .hero {
+        padding-top: 8rem;
+        padding-bottom: 5rem;
+      }
+      section.plans, section.schedule {
+        padding-left: 2rem;
+        padding-right: 2rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- ===== Cabeçalho com Navegação ===== -->
+  <header>
+    <nav class="container" aria-label="Navegação principal">
+      <div class="logo" aria-label="Logo da Academia LOGENVITÁ" tabindex="0">LOGENVITÁ</div>
+      <div class="nav-links" role="navigation">
+        <a href="planos.html" aria-label="Ver nossos planos">Planos</a>
+        <a href="quadro de horarios.html" aria-label="Ver o quadro de horários">Horários</a>
+      </div>
+    </nav>
+  </header>
+
+  <main>
+    <!-- ===== Seção Hero ===== -->
+    <section class="hero" role="banner" aria-labelledby="hero-title">
+      <!-- Título Hero: Altere o texto aqui -->
+      <h1 id="hero-title">Academia Longevitá</h1>
+      <!-- Subtítulo Hero: Atualize este texto do parágrafo -->
+      <p>Transforme sua saúde e bem-estar com nossos planos exclusivos. Comece sua jornada para uma vida mais saudável hoje mesmo.</p>
+      <!-- Texto do botão de chamada para ação pode ser alterado aqui -->
+    <a href="formulario.html" class="btn-link">Inscreva-se Agora</a>
+    <style>
+  /* Estilo de botão elegante seguindo DEFAULT guidelines */
+  .btn-link {
+    display: inline-block;
+    background-color: #000000;
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 1.25rem;
+    padding: 1rem 2rem;
+    border-radius: 0.75rem;
+    text-decoration: none;
+    user-select: none;
+    transition: background-color 0.3s ease;
+  }
+  .btn-link:hover,
+  .btn-link:focus-visible {
+    background-color: #2563eb;
+    outline: none;
+  }
+</style>
+    </section>
+
+ 

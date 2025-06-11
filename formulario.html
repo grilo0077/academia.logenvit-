@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Formulário de Inscrição - Academia Longevitá</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@600;700&display=swap');
+
+  /* Reset básico */
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+
+  body {
+    margin: 0;
+    font-family: 'Inter', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI',
+      Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    background-color: #2d083b;
+    color: #ffffff; /* cinza neutro */
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Container centralizado e com espaçamento */
+  main {
+    max-width: 600px;
+    margin: 4rem auto;
+    padding: 0 2rem;
+  }
+
+  /* Cartão do formulário */
+  form.inscription-form {
+    background: #910379;
+    border-radius: 0.75rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    padding: 2.5rem 2rem 3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  form.inscription-form h2 {
+    font-weight: 700;
+    font-size: 2rem;
+    color: #ffffff; /* preto quase */
+    margin: 0 0 1rem 0;
+    user-select: none;
+  }
+
+  /* Grupos de inputs */
+  .form-group {
+    display: flex;
+    flex-direction: column;
+  }
+  label {
+    font-weight: 600;
+    color: #ffffff; /* cinza escuro */
+    margin-bottom: 0.5rem;
+    user-select: none;
+  }
+  input, select {
+    font-family: inherit;
+    font-size: 1rem;
+    padding: 0.75rem 1rem;
+    border: 1px solid #d1d5db;
+    border-radius: 0.5rem;
+    color: #111827;
+    transition: border-color 0.3s ease;
+  }
+  input:focus, select:focus {
+    border-color: #2563eb; /* azul */
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.3);
+  }
+
+  /* Botão de envio */
+  button[type="submit"] {
+    margin-top: 1rem;
+    background: #2d083b;
+    color: #ffffff;
+    font-weight: 700;
+    font-size: 1.25rem;
+    padding: 1rem;
+    border: none;
+    border-radius: 0.75rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  button[type="submit"]:hover,
+  button[type="submit"]:focus-visible {
+    background: #2563eb;
+    outline: none;
+  }
+
+  /* Responsividade */
+  @media (max-width: 480px) {
+    main {
+      margin: 3rem auto;
+      padding: 0 1.25rem;
+      max-width: 100%;
+    }
+  }
+</style>
+</head>
+<body>
+
+<main>
+  <form id="form-inscricao" class="inscription-form" aria-labelledby="form-title" novalidate>
+    <h2 id="form-title">Formulário de Inscrição</h2>
+
+    <div class="form-group">
+      <label for="full-name">Nome Completo</label>
+      <input type="text" id="full-name" name="fullName" placeholder="Digite seu nome completo" required autocomplete="name" />
+    </div>
+
+    <div class="form-group">
+      <label for="email">E-mail</label>
+      <input type="email" id="email" name="email" placeholder="seuemail@exemplo.com" required autocomplete="email" />
+    </div>
+
+    <div class="form-group">
+      <label for="phone">Telefone</label>
+      <input type="tel" id="phone" name="phone" placeholder="(99) 99999-9999" pattern="^\(?\d{2}\)?[\s-]?\d{4,5}-?\d{4}$" required autocomplete="tel" />
+    </div>
+
+    <div class="form-group">
+      <label for="birthdate">Data de Nascimento</label>
+      <input type="date" id="birthdate" name="birthdate" required max="" />
+    </div>
+    <div class="form-group">
+      <label for="cadastro">CPF</label>
+      <input type="text" id="cadastro" name="cadastro" placeholder="Digite seu CPF" pattern="\d{3}\.\d{3}\.\d{3}-\d{2}" required autocomplete="cpf" />
+
+    <div class="form-group">
+      <label for="plan">Plano</label>
+      <select id="plan" name="plan" required>
+        <option value="" disabled selected>Selecione seu plano</option>
+        <option value="essencial">Essencial Longevitá - R$129,90</option>
+        <option value="vitalidade">Vitalidade - R$159,90</option>
+        <option value="logenvidade">Logenvidade Total - R$189,90</option>
+        <option value="bemestar">Bem Estar Completo - R$219,90</option>
+      </select>
+    </div>
+
+    <div class="form-group">
+      <label>
+        <input type="checkbox" name="terms" required />
+        Eu aceito os termos e condições da academia.
+      </label>
+    </div>
+
+    <button type="submit">Enviar Inscrição</button>
+  </form>
+</main>
+
+<script>
+  // Definir a data máxima do campo de nascimento (não permitir data futura)
+  document.addEventListener('DOMContentLoaded', () => {
+    const birthdate = document.getElementById('birthdate');
+    const today = new Date().toISOString().split('T')[0];
+    birthdate.setAttribute('max', today);
+
+    // Validação simples do formulário e mensagem de sucesso
+    const form = document.getElementById('form-inscricao');
+    form.addEventListener('submit', event => {
+      event.preventDefault();
+
+      if(!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+
+      alert('Inscrição enviada com sucesso! Entraremos em contato em breve.');
+      form.reset();
+    });
+  });
+</script>
+
+  <!-- Botão Voltar colocado antes do fechamento do body -->
+  <button 
+    type="button" 
+    aria-label="Voltar à página anterior" 
+    class="back-button"
+    onclick="window.history.back()"
+    style="
+      position: fixed;
+      top: 1.5rem;
+      right: 1.5rem;
+      background-color: #000000;
+      color: #ffffff;
+      font-weight: 700;
+      font-size: 1.25rem;
+      padding: 1rem 2rem;
+      border: none;
+      border-radius: 0.75rem;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+      transition: background-color 0.3s ease;
+      user-select: none;
+      z-index: 9999;
+    "
+    onfocus="this.style.backgroundColor='#2563eb';"
+    onblur="this.style.backgroundColor='#000000';"
+  >
+    Voltar
+  </button>
+  <style>
+    /* Responsive adjustments for smaller screens */
+    @media (max-width: 600px) {
+      .back-button {
+        font-size: 1rem !important;
+        padding: 0.75rem 1.5rem !important;
+        top: 1rem !important;
+        right: 1rem !important;
+      }
+    }
+    /* Mobile-first: hide back button by default */
+    .back-button {
+      display: none;
+    }
+
+    /* Show back button on screens 768px and wider (desktop and tablets) */
+    @media (min-width: 768px) {
+      .back-button {
+        display: inline-block;
+      }
+    }
+
+    /* Optional: Smooth transition when toggling */
+    .back-button {
+      transition: opacity 0.3s ease;
+    }
+  </style>
+  <script>
+    (function() {
+      const button = document.querySelector('button[aria-label="Voltar à página anterior"]');
+
+      function toggleButtonVisibility() {
+        if (window.scrollY > 0) {
+          button.style.display = 'none';
+        } else {
+          button.style.display = '';
+        }
+      }
+
+      window.addEventListener('scroll', toggleButtonVisibility, { passive: true });
+      toggleButtonVisibility();
+    })();
+  </script>
+</body>
+</html>
+
